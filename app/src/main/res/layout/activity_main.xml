@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#FF0077"
-            android:paddingLeft="@{100}"
+            android:paddingLeft="@{user.padding}"
             android:text="@{user.firstName+user.lastName, default=my_default}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
