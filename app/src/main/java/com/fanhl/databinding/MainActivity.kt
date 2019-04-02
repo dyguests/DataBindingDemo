@@ -13,6 +13,8 @@ class MainActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
         binding.user = User("张三")
+        binding.task = Task()
+        binding.presenter = Presenter()
     }
 }
 
