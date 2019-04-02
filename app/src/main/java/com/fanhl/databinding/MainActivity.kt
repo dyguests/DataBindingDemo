@@ -3,8 +3,10 @@ package com.fanhl.databinding
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.fanhl.databinding.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -12,13 +14,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
 
-        binding.user = User("张", ObservableField("无忌"))
+        binding.user = User("张", MutableLiveData<String>().apply {
+            value = "无忌"
+        })
         binding.task = Task()
         binding.presenter = object : Presenter() {
             override fun onSaveClick(task: Task) {
                 super.onSaveClick(task)
-                binding.user?.lastName?.set("三丰")
+                binding.user?.lastName?.value = "三丰"
             }
         }
     }
@@ -26,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
 data class User(
     val firstName: String,
-    val lastName: ObservableField<String>
+    val lastName: MutableLiveData<String>
 )
 
 open class Presenter {
@@ -37,6 +42,11 @@ open class Presenter {
     }
 }
 
-class Task {
-
+class Task : BaseObservable() {
+    @get:Bindable
+    var firstName: String = ""
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.task)
+        }
 }
