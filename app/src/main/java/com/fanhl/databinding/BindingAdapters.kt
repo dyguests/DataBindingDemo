@@ -10,7 +10,7 @@ import androidx.databinding.BindingMethods
 //     BindingMethod(type = TextView::class, attribute = "android:paddingLeft", method = "setPaddingLeft")
 // )
 object BindingAdapters {
-    @BindingAdapter("android:paddingLeft")
+    @BindingAdapter("android:paddingLeftToAll")
     @JvmStatic
     fun setPaddingLeft(view: TextView, padding: Int) {
         view.setPadding(padding, padding, padding, padding)
